@@ -34,7 +34,7 @@ class App extends Component {
 	//retrieve habits from database
 	habitRetrieval() {
 	  //TODO: replace email with signed in account email
-	  const ref = firebase.database().ref('users/a@gmail_com/history');
+	  const ref = firebase.database().ref('users/connorpstamper@gmail_com/history');
 	  
 	  //retrieve tasks by date
 	  const date = this.state.date.toJSON().substr(0,10);
