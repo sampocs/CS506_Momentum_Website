@@ -3,6 +3,14 @@ import Calendar from 'react-calendar';
 import './App.css';
 import firebase from './firebase.js';
 import Collapsible from 'react-collapsible';
+import Select from 'react-select';
+import styles from './Calendar.css';
+
+//replace with method for retrieving logged-in user after authentication is added
+const users = [
+ { value: '81955841', label: '81955841' },
+ { value: '601778450', label: '601778450' },
+];
 
 class App extends Component {
   constructor() {
@@ -19,7 +27,8 @@ class App extends Component {
 		  email: '',
 		  loading: true,
 		  modules: null,
-		  update: true
+		  update: true,
+		  selectedOption: '81955841',
 	  };
   }
 	
@@ -34,11 +43,11 @@ class App extends Component {
 	//retrieve habits from database
 	habitRetrieval() {
 	  //TODO: replace email with signed in account email
-	  const ref = firebase.database().ref('users/connorpstamper@gmail_com/history');
+	  const ref = firebase.database().ref('users/' + this.state.selectedOption.value + '/history');
 	  
 	  //retrieve tasks by date
-	  const date = this.state.date.toJSON().substr(0,10);
-	  const post = ref.child(date).orderByKey();
+	  const currDate = this.state.date.toJSON().substr(0,10);
+	  const post = ref.child(currDate).orderByKey();
 	  
 	  if (this.state.update == true) {
 	  this.setState ({
@@ -127,9 +136,17 @@ class App extends Component {
 		  loading: true
 	  });
   }
+  
+  handleChange = selectedOption => {
+	  this.setState({ 
+		selectedOption,
+		update: true,
+		loading: true
+	});
+  }
 	
   render() {
-	const {loading, modules} = this.state;
+	const {loading, modules, selectedOption} = this.state;
 	
     return loading ? (
 	  <div><center><h1> loading... </h1></center></div>
@@ -145,6 +162,14 @@ class App extends Component {
 		/>
 		</center>
         </header>
+		<div className="SelectUser">
+		<Select
+			value={selectedOption}
+			onChange={this.handleChange}
+			options={users}
+			placeholder={'Select user (placeholder)'}
+		/>
+		</div>
 		<div className="Container">
 			<section className="add-item">
 			<section className="display-date">
