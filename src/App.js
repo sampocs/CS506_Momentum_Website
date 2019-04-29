@@ -6,12 +6,6 @@ import Collapsible from 'react-collapsible';
 import Select from 'react-select';
 import styles from './Calendar.css';
 
-//replace with method for retrieving logged-in user after authentication is added
-const users = [
- { value: '81955841', label: '81955841' },
- { value: '601778450', label: '601778450' },
-];
-
 class App extends Component {
   constructor() {
 	  super();
@@ -28,8 +22,11 @@ class App extends Component {
 		  loading: true,
 		  modules: null,
 		  update: true,
-		  selectedOption: '81955841',
+		  selectedOption: '',
+		  error: '',
 	  };
+	  this.withChange = this.withChange.bind(this);
+	  this.handleSubmit = this.handleSubmit.bind(this);
   }
 	
   componentDidMount() {
@@ -42,8 +39,7 @@ class App extends Component {
 	
 	//retrieve habits from database
 	habitRetrieval() {
-	  //TODO: replace email with signed in account email
-	  const ref = firebase.database().ref('users/' + this.state.selectedOption.value + '/history');
+	  const ref = firebase.database().ref('users/' + this.state.selectedOption + '/history');
 	  
 	  //retrieve tasks by date
 	  const currDate = this.state.date.toJSON().substr(0,10);
@@ -115,7 +111,7 @@ class App extends Component {
 			  //finished loading
 			  this.setState({
 				  post: postList,
-				  loading: false
+				  //loading: false
 			  });
 		  });
 		});
@@ -123,7 +119,7 @@ class App extends Component {
 		if (this.state.loading === true) {
 			this.setState({
 				post: 'No habits found.',
-				loading: false
+				//loading: false
 			});
 		}
 	  }
@@ -133,7 +129,7 @@ class App extends Component {
 	  this.setState({
 		  date,
 		  update: true,
-		  loading: true
+		  //loading: true
 	  });
   }
   
@@ -141,18 +137,77 @@ class App extends Component {
 	  this.setState({ 
 		selectedOption,
 		update: true,
-		loading: true
+		//loading: true
 	});
   }
+  
+  //START OF AUTH
+  withChange(e) {
+	  this.setState({
+		  [e.target.name]: e.target.value,
+	  });
+  }
+  
+  handleSubmit(e) {
+	  e.preventDefault();
+	  let hash = 0, i, chr;
+	  if (this.state.email.length === 0) return hash;
+	  for (i = 0; i < this.state.email.length; i++) {
+		  chr = this.state.email.charCodeAt(i);
+		  hash = ((hash << 5) - hash) + chr;
+		  hash |= 0;
+	  }
+	  
+	  this.setState({
+		  selectedOption: hash.toString(),
+	  });
+	  
+	  this.checkEmail();
+  }
+  
+  checkEmail() {
+	  const tempRef = firebase.database().ref('users/');
+	  tempRef.on('value', (snapshot) => {
+		  let items = snapshot.val();
+		  
+		  for(let item in items) {
+			  if(item === this.state.selectedOption) {
+				  this.setState({
+					  loading: false,
+				  });
+			  }
+		  }
+		  
+		  if (this.state.loading === true) {
+			  this.setState({
+				  error: 'No corresponding email found.',
+			  });
+		  }
+	  });
+  }
+  //END OF AUTH
 	
   render() {
 	const {loading, modules, selectedOption} = this.state;
 	
     return loading ? (
-	  <div><center><h1> loading... </h1></center></div>
+		<center>
+	  	<div className="Auth">
+		<h1>Please enter your email</h1>
+		<form onSubmit={this.handleSubmit}>
+			<input type="text" name="email" onChange={this.withChange} value={this.state.email} />
+			<button>Log in</button>
+		</form>
+		<h1>{this.state.error}</h1>
+		</div>
+		</center>
     ) : (
       <div className="App">
         <header className="Calendar">
+		<h1>Welcome, {this.state.email}</h1>
+		<form onSubmit={this.withSubmit}>
+			<button>Log out</button>
+		</form>
 		<center>
 		<button class="button"><span>Momentum Tracker </span></button>
 		<Calendar 
@@ -162,14 +217,6 @@ class App extends Component {
 		/>
 		</center>
         </header>
-		<div className="SelectUser">
-		<Select
-			value={selectedOption}
-			onChange={this.handleChange}
-			options={users}
-			placeholder={'Select user (placeholder)'}
-		/>
-		</div>
 		<div className="Container">
 			<section className="add-item">
 			<section className="display-date">
