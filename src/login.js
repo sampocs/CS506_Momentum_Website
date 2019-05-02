@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import firebase from './firebase';
-import { withGlobalState } from 'react-globally';
 
 class Login extends Component {
 	constructor() {

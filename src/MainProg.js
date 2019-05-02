@@ -4,7 +4,6 @@ import firebase from './firebase.js';
 import Collapsible from 'react-collapsible';
 import Select from 'react-select';
 import styles from './Calendar.css';
-import { withGlobalState } from 'react-globally';
 
 class MainProg extends Component {
   constructor() {
@@ -164,8 +163,6 @@ class MainProg extends Component {
       <div className="App">
         <header className="Calendar">
 		<h1>Welcome, {this.state.email}</h1>
-		<br/>
-		<h1>UserID: {this.state.selectedOption}</h1>
 		<center>
 		<button class="button"><span>Momentum Tracker </span></button>
 		<Calendar 
