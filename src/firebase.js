@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+
 const config = {
 	apiKey: "AIzaSyAT_Bhbv7xU6eJQbSAuS0imH8rgSQahMdE",
     authDomain: "cs506-momentum.firebaseapp.com",
