@@ -24,6 +24,7 @@ class Login extends Component {
 	handleSubmit = (event) => {
 	   event.preventDefault();
 	   const email = this.props.ema;
+	   localStorage.setItem("myEmail", email);
 	   const { password } = this.state;
 	   firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
 		   this.props.history.push('/');

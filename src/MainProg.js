@@ -33,9 +33,10 @@ class MainProg extends Component {
 		  hash = ((hash << 5) - hash) + chr;
 		  hash |= 0;
 	  }
-
+	  
 	  this.setState({
-		  email: this.props.email,
+		  //email: this.props.email,
+		  email: localStorage.getItem("myEmail"),
 		  selectedOption: hash.toString(),
 	  });
 	  

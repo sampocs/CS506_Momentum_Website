@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-do
 import Home from './Home';
 import Login from './login';
 import ProtectedRoute from './ProtectedRoute';
-import LogOut from './logout';
+import Logout from './logout';
 import MainProg from './MainProg';
 import './Navigation.css';
 
@@ -28,13 +28,14 @@ class Navigation extends Component {
 				<div>
 				<center>
 				<div className="NavHeadBar">
+				{this.renderRedirect}
 				<NavLink to="/"><button class="button"><span>Home</span></button></NavLink>
 				{this.props.authenticated ? (
 					<span>
 						<NavLink to="/MainProg">
 							<button class="button"><span>Calendar</span></button>
 						</NavLink>
-						<span><LogOut /></span>
+						<NavLink to="/logout"><button class="button"><span>Logout</span></button></NavLink>
 					</span>
 				) : (
 					<span>
@@ -56,6 +57,11 @@ class Navigation extends Component {
 						authenticated={this.props.authenticated} 
 						render={(props) => <MainProg {...props} email={this.state.email} />}
 						path="/MainProg"
+					/>
+					<Route
+						authenticated={this.props.authenticated}
+						render={(props) => <Logout {...props} />}
+						path="/logout"
 					/>
 				</Switch>
 				</center>

@@ -9,7 +9,7 @@ const Home = () => {
   return ( 
 	<section style={ appStyle }>
 	<center>
-    <h1>Welcome to the website version of Momentum Tracker!</h1> 
+    <button class="headButton"><h1>Welcome to the website version of Momentum Tracker!</h1></button>
     </center>
 	</section>
   ); 
