@@ -6,7 +6,7 @@ const logOutUser = () => {
 };
 
 const logout = () => {
- return <button onClick={logOutUser} children="logout" />;
+ return <button class="button" onClick={logOutUser} children="Logout"><span>Logout</span></button>;
 };
 
 export default logout;

@@ -38,15 +38,28 @@ class Login extends Component {
 	   
 	   return (
 		   <form onSubmit={this.handleSubmit}>
-			 <input type="text" name="email" placeholder="Email" value={email} onChange={this.handleChange} />
+			 <button class="headButton"><h1>Please enter your credentials to log in.</h1></button>
+		   
+			 <br/>
 			 <input
+				class="input" 
+				type="text" 
+				name="email" 
+				placeholder="Email" 
+				value={email} 
+				onChange={this.handleChange} 
+			 />
+			 <br/>
+			 <input
+			   class="input"
 			   type="password"
 			   name="password"
 			   placeholder="Password"
 			   value={password}
 			   onChange={this.handleInputChange}
 			 />
-			 <button children="Log In" />
+			 <br/>
+			 <button class="button" children="Log In"><span>Log In</span></button>
 		   </form>
 	   );
 	 }

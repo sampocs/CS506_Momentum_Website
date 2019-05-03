@@ -164,7 +164,6 @@ class MainProg extends Component {
         <header className="Calendar">
 		<h1>Welcome, {this.state.email}</h1>
 		<center>
-		<button class="button"><span>Momentum Tracker </span></button>
 		<Calendar 
 			onChange={this.onChange}
 			value={this.state.date}

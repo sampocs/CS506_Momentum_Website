@@ -19,12 +19,12 @@
 
 body {
 	font-family: 'Open Sans', sans-serif;
+	background-image: url("img/bg.jpg");
 	background-color: #4286f4;
 }
 
 header {
   color: #fff;
-  background-color: #103D5D;
   padding: 33px 0 25px 15px;
 }
 
@@ -56,46 +56,6 @@ header h1 {
 .add-item form {
   width: 100%;
   overflow: hidden;
-}
-
-.button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #9166f7;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 28px;
-  padding: 20px;
-  width: 600px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  padding-right: 25px;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
 }
 
 ul {
