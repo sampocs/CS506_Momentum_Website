@@ -4,6 +4,7 @@ import firebase from './firebase.js';
 import Collapsible from 'react-collapsible';
 import Select from 'react-select';
 import styles from './Calendar.css';
+let dateFormat = require('dateformat')
 
 class MainProg extends Component {
 	constructor() {
@@ -22,6 +23,8 @@ class MainProg extends Component {
 			update: true,
 			selectedOption: '',
 			error: '',
+			habitInfo: [],
+			settings: []
 		};
 	}
 
@@ -55,7 +58,7 @@ class MainProg extends Component {
 		const currDate = this.state.date.toJSON().substr(0, 10);
 		const post = ref.child(currDate).orderByKey();
 
-		if (this.state.update == true) {
+		if (this.state.update === true) {
 			this.setState({
 				update: false
 			});
@@ -68,6 +71,8 @@ class MainProg extends Component {
 					type: [],
 					goal: [],
 					progress: [],
+					habitInfo: [],
+					settings: []
 				});
 
 				//retrieve details of habits
@@ -77,6 +82,7 @@ class MainProg extends Component {
 						completed: this.state.completed.concat([child.val().completed]),
 						notes: this.state.notes.concat([child.val().notes]),
 						type: this.state.type.concat([child.val().type]),
+						habitInfo: this.state.habitInfo.concat([child.val().habitInfo]),
 					});
 
 					//print out habit's details
@@ -85,27 +91,19 @@ class MainProg extends Component {
 							<center>
 								<Collapsible trigger={dataList}>
 									<div class='content'>
-										<b>Completed: </b>
-										{(() => {
-											switch (this.state.completed[index].toString()) {
-												case 'false': return ' Incomplete';
-												default: return ' Completed';
-											}
-										})()}
+										{this.state.type[index] === 'PROGRESS' &&
+										<b>{this.state.habitInfo[index].progress + '/' + this.state.habitInfo[index].goal}</b>
+										}
+										{this.state.type[index] === 'SUBTASK' &&
+										this.state.habitInfo[index].subtasks.map((subtask, index) => (
+											<b>{subtask[0]}</b>
+										))
+										}
 										<br />
 										<b>Notes: </b>
 										{(() => {
 											switch (this.state.notes[index]) {
 												case '': return ' None';
-												default: return ' ' + this.state.notes[index];
-											}
-										})()}
-										<br />
-										<b>Type: </b>{this.state.type[index]}
-										<br />
-										{(() => {
-											switch (this.state.type[index]) {
-												case 'PROGRESS': return 'Goal: ' + this.state.goal[index] + ', Progress: ' + this.state.progress[index];
 												default: return ' ' + this.state.notes[index];
 											}
 										})()}
@@ -173,7 +171,7 @@ class MainProg extends Component {
 						<div className="habit-container">
 							<section className="add-item">
 								<section className="display-date">
-									<center><td>Habits for {this.state.date.toJSON().substr(0, 10)}</td></center>
+									<center><td>Habits for {dateFormat(this.state.date, "mmmm d, yyyy")}</td></center>
 								</section>
 								<div className="habits">
 									<ul>{this.state.post}</ul>

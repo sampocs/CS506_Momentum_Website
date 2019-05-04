@@ -9,21 +9,28 @@ class App extends Component {
  };
  
  componentDidMount() {
-   firebase.auth().onAuthStateChanged((authenticated) => {
-     authenticated ? this.setState(
-	     () => ({
+   this.unsubscribe = firebase.auth().onAuthStateChanged(
+     (user) => {
+       if (user) {
+         this.setState({
            authenticated: true,
+           email: user.email
          })
-		) : this.setState(
-		 () => ({
+       }
+       else {
+         this.setState({
            authenticated: false,
+           email: ''
          })
-		);
+       }
    });
+ }
+ componentWillUnmount() {
+   this.unsubscribe();
  }
  
  render() {
-   return <Navigation authenticated={this.state.authenticated} />;
+   return <Navigation authenticated={this.state.authenticated} email={this.state.email}/>;
  }
 }
 

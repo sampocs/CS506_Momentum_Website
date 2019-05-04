@@ -9,8 +9,8 @@ import './Navigation.css';
 import firebase from './firebase';
 
 class Navigation extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.state = {
 			email: '',
