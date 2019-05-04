@@ -29,7 +29,9 @@ header {
 }
 
 .display-date {
-  font-size: calc(10px + 2vmin);
+  font-size: calc(20px + 2vmin);
+  text-decoration-line: underline;
+  font-weight: bold
 }
 
 header h1 {
@@ -99,7 +101,8 @@ ul {
 .Collapsible__contentOuter {
 	background-color: white;
   font-size: 1em;
-  color: black
+  color: #215777;
+  border-radius: 5
 }
 
 .content {
