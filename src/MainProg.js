@@ -87,7 +87,7 @@ class MainProg extends Component {
 
 					//print out habit's details
 					const postList = this.state.habit.map((dataList, index) =>
-						<p>
+						<p style={{ backgroundColor: (this.state.completed[index]) ? '#27ADA0' : '#DC425A' }}>
 							<center>
 								<Collapsible trigger={dataList}>
 									<div class='content'>
