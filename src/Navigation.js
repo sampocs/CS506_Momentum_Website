@@ -14,12 +14,14 @@ class Navigation extends Component {
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.state = {
 			email: '',
+			changedEmail: false
 		};
 	}
 
 	handleEmailChange = (newEmail) => {
 		this.setState({
-			email: newEmail
+			email: newEmail,
+			changedEmail: true
 		});
 	};
 
@@ -45,12 +47,12 @@ class Navigation extends Component {
 							<Route exact path="/" component={Home} />
 							<Route
 								authenticated={this.props.authenticated}
-								render={(props) => <Login {...props} handleEmailChange={this.handleEmailChange} ema={this.state.email} />}
+								render={(props) => <Login {...props} handleEmailChange={this.handleEmailChange} ema={this.state.changedEmail ? this.state.email : this.props.email} />}
 								path="/login"
 							/>
 							<ProtectedRoute
 								authenticated={this.props.authenticated}
-								render={(props) => <MainProg {...props} email={this.state.email} />}
+								render={(props) => <MainProg {...props} email={this.state.changedEmail ? this.state.email : this.props.email} />}
 								path="/MainProg"
 							/>
 							<Route

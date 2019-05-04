@@ -29,17 +29,17 @@ class MainProg extends Component {
 	}
 
 	componentDidMount() {
+		let email = localStorage.getItem("myEmail")
 		let hash = 0, i, chr;
-		if (this.props.email.length === 0) return hash;
-		for (i = 0; i < this.props.email.length; i++) {
-			chr = this.props.email.charCodeAt(i);
+		if (email.length === 0) return hash;
+		for (i = 0; i < email.length; i++) {
+			chr = email.charCodeAt(i);
 			hash = ((hash << 5) - hash) + chr;
 			hash |= 0;
 		}
 
 		this.setState({
-			//email: this.props.email,
-			email: localStorage.getItem("myEmail"),
+			email: email,
 			selectedOption: hash.toString(),
 		});
 

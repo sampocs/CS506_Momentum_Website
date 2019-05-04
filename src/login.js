@@ -2,16 +2,28 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import firebase from './firebase';
 
+const firebaseErrors = {
+    DuplicateEmail: 'auth/email-already-in-use',
+    InvalidEmail: 'auth/invalid-email',
+    WeakPassword: 'auth/weak-password',
+    WrongPassword: 'auth/wrong-password',
+    UserNotFound: 'auth/user-not-found',
+    PermissionDenied: 'permission-denied'
+}
+
 class Login extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.handleChange = this.handleChange.bind(this);
+		this.state = {
+			password: '',
+			error: null,
+			incorrectPassword: false,
+			errorString: ''
+		};
 	}
 
-	state = {
-		password: '',
-		error: null,
-	};
+
 
 	handleInputChange = (event) => {
 		this.setState({ [event.target.name]: event.target.value });
@@ -24,15 +36,29 @@ class Login extends Component {
 	handleSubmit = (event) => {
 		event.preventDefault();
 		const email = this.props.ema;
-		localStorage.setItem("myEmail", email);
 		const { password } = this.state;
-		firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
-			this.props.history.push('/MainProg');
-		}).catch((error) => {
-			this.setState({
-				error: error
-			});
-		});
+		firebase.auth().signInWithEmailAndPassword(email, password).then(
+			({ user }) => {
+				localStorage.setItem("myEmail", user.email);
+				this.setState({ incorrectPassword: false })
+				this.props.history.push('/MainProg');
+			}, (error) => {
+				let errorString;
+				if (error.code === firebaseErrors.UserNotFound) {
+					errorString = `No user found with email ${email}`
+                }
+                else if (error.code === firebaseErrors.WrongPassword) {
+					errorString = `Incorrect password for ${email}`
+                }
+                else if (error.code === firebaseErrors.InvalidEmail) {
+					errorString = 'Invalid email address.'
+				}
+				else {
+					errorString = 'Invalid account credentials'
+				}
+				this.setState({ incorrectPassword: true, error: error, errorString: errorString })
+			}
+		)
 	};
 	render() {
 		const { email, password, error } = this.state;
@@ -40,7 +66,9 @@ class Login extends Component {
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<h1>Please enter your credentials to log in.</h1>
-
+				{this.state.incorrectPassword &&
+				<h3 class='invalid-credentials'>{this.state.errorString}</h3>
+				}
 				<br />
 				<input
 					class="input"
