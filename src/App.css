@@ -83,17 +83,30 @@ ul {
 }
 
 .Collapsible {
-	width: 50%;
 	margin: 8px;
 	font-size: 2em;
 }
 
+.Collapsible span:hover {
+  cursor: pointer;
+}
+
 .Collapsible__contentInner {
 	margin: 10px;
-	font-size: 1em;
+	font-size: 20px;
 }
 
 .Collapsible__contentOuter {
 	background-color: white;
-	font-size: 1em;
+  font-size: 1em;
+  color: black
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content b {
+  display: flex;
 }

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "dateformat": "^3.0.3",
     "firebase": "^5.9.3",
     "jest-junit": "^6.3.0",
     "react": "^16.8.6",

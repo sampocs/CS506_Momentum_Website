@@ -92,12 +92,12 @@ class MainProg extends Component {
 								<Collapsible trigger={dataList}>
 									<div class='content'>
 										{this.state.type[index] === 'PROGRESS' &&
-										<b>{this.state.habitInfo[index].progress + '/' + this.state.habitInfo[index].goal}</b>
+											<b>{this.state.habitInfo[index].progress + '/' + this.state.habitInfo[index].goal}</b>
 										}
 										{this.state.type[index] === 'SUBTASK' &&
-										this.state.habitInfo[index].subtasks.map((subtask, index) => (
-											<b>{subtask[0]}</b>
-										))
+											this.state.habitInfo[index].subtasks.map((subtask, index) => (
+												<b>{subtask[0]}</b>
+											))
 										}
 										<br />
 										<b>Notes: </b>
@@ -110,7 +110,6 @@ class MainProg extends Component {
 									</div>
 								</Collapsible>
 							</center>
-							<hr />
 						</p>
 					);
 
