@@ -1,6 +1,6 @@
 body {
 	font-family: 'Open Sans', sans-serif;
-	background-color: #4286f4;
+	background-color: #215777;
 }
 
 .container {
@@ -15,24 +15,19 @@ body {
   margin: 0 auto;
 }
 
-.headButton {
-	display: inline-block;
-	border-radius: 10px;
-	background-color: #07397a;
-	border: none;
-	color: #FFFFFF;
-	text-align: center;
-	font-size: 20px;
-	padding: 5px;
-	width: 1000px;
-	transition: all 0.5s;
-	margin: 10px;
+h1 {
+  color: white;
+  margin-top: 30px;
+}
+
+h2 {
+  color: #27ADA0
 }
 
 .button {
   display: inline-block;
   border-radius: 4px;
-  background-color: #442e75;
+  background-color: #27ADA0;
   border: none;
   color: #FFFFFF;
   text-align: center;
@@ -71,11 +66,17 @@ body {
 
 .NavHeadBar {
 	padding: 20px;
-	background-color: #9166f7;
+  background-color: #fff;
+  padding-left: 50px;
+  padding-right: 50px;
+  justify-content: space-between;
+  flex-direction: row;
+  display: flex;
+  box-shadow: 0 5px 5px -5px #000;
 }
 
 .NavBar {
-	padding: 20px;
+  padding: 20px;
 }
 
 .input {

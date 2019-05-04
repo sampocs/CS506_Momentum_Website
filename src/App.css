@@ -19,8 +19,8 @@
 
 body {
 	font-family: 'Open Sans', sans-serif;
-	background-image: url("img/bg.jpg");
-	background-color: #4286f4;
+  background: #215777;
+  height: 100%;
 }
 
 header {
@@ -53,12 +53,18 @@ header h1 {
   margin-left: 10px;
   margin-right: 10px;
   display: block;
+  margin-top: 50px;
 }
 
 .calendar-container{
   max-width: 50%;
   display: inline-block;
   float: left;
+}
+
+.habit-container{
+  max-width: 50%;
+  display: inline-block;
 }
 
 .wrapper {
@@ -88,6 +94,6 @@ ul {
 }
 
 .Collapsible__contentOuter {
-	background-color: #9166f7;
+	background-color: white;
 	font-size: 1em;
 }

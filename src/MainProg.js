@@ -162,9 +162,6 @@ class MainProg extends Component {
 			</center>
 		) : (
 				<div className="App">
-					<header className="Calendar">
-						<h1>Welcome {this.state.email}</h1>
-					</header>
 					<div className="Container">
 						<div className="calendar-container">
 							<Calendar

@@ -6,6 +6,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Logout from './logout';
 import MainProg from './MainProg';
 import './Navigation.css';
+import firebase from './firebase';
 
 class Navigation extends Component {
 	constructor() {
@@ -15,56 +16,50 @@ class Navigation extends Component {
 			email: '',
 		};
 	}
-	
+
 	handleEmailChange = (newEmail) => {
-	   this.setState({ 
-			email: newEmail 
-	   });
+		this.setState({
+			email: newEmail
+		});
 	};
-	
+
+	logOutUser = () => {
+		firebase.auth().signOut();
+	}
+
 	render() {
 		return (
 			<Router>
 				<div>
-				<center>
-				<div className="NavHeadBar">
-				{this.renderRedirect}
-				<NavLink to="/"><button class="button"><span>Home</span></button></NavLink>
-				{this.props.authenticated ? (
-					<span>
-						<NavLink to="/MainProg">
-							<button class="button"><span>Calendar</span></button>
-						</NavLink>
-						<NavLink to="/logout"><button class="button"><span>Logout</span></button></NavLink>
-					</span>
-				) : (
-					<span>
-						<NavLink to="/Login">
-							<button class="button"><span>Login</span></button>
-						</NavLink>
-					</span>
-				)}
-				</div>
-				
-				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route 
-						authenticated={this.props.authenticated} 
-						render={(props) => <Login {...props} handleEmailChange={this.handleEmailChange} ema={this.state.email} />}
-						path="/login" 
-					/>
-					<ProtectedRoute 
-						authenticated={this.props.authenticated} 
-						render={(props) => <MainProg {...props} email={this.state.email} />}
-						path="/MainProg"
-					/>
-					<Route
-						authenticated={this.props.authenticated}
-						render={(props) => <Logout {...props} />}
-						path="/logout"
-					/>
-				</Switch>
-				</center>
+					<center>
+						{this.renderRedirect}
+						{this.props.authenticated && (
+							<div className="NavHeadBar">
+								<h2>{this.state.email}</h2>
+								<NavLink to="/Login"><button class="button" onClick={this.logOutUser}><span>Logout</span></button></NavLink>
+							</div>
+
+						)}
+
+						<Switch>
+							<Route exact path="/" component={Home} />
+							<Route
+								authenticated={this.props.authenticated}
+								render={(props) => <Login {...props} handleEmailChange={this.handleEmailChange} ema={this.state.email} />}
+								path="/login"
+							/>
+							<ProtectedRoute
+								authenticated={this.props.authenticated}
+								render={(props) => <MainProg {...props} email={this.state.email} />}
+								path="/MainProg"
+							/>
+							<Route
+								authenticated={this.props.authenticated}
+								render={(props) => <Logout {...props} />}
+								path="/logout"
+							/>
+						</Switch>
+					</center>
 				</div>
 			</Router>
 		);

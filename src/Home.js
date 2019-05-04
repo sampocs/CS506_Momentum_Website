@@ -1,17 +1,16 @@
-import React from 'react'; 
-import Background from './img/bg.jpg';
+import React from 'react';
 
 var appStyle = {
-	backgroundImage: 'url(${Background})'
+  background: '#215777'
 }
 
-const Home = () => { 
-  return ( 
-	<section style={ appStyle }>
-	<center>
-    <button class="headButton"><h1>Welcome to the website version of Momentum Tracker!</h1></button>
-    </center>
-	</section>
-  ); 
-}; 
+const Home = () => {
+  return (
+    <section style={appStyle}>
+      <center>
+        <h1>Welcome to Momentum!</h1>
+      </center>
+    </section >
+  );
+};
 export default Home;
